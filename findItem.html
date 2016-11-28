@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Find Iterm in obj</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        function FindItem () {
+            var a = {
+                last: "String",
+                name: { hello: {o: "String"}},
+                forecast: {condition: {g : {item: 4}}},
+                number: 1
+            };
+            this.startSearch(a, "item", this.callback);	
+        }
+
+        FindItem.prototype.startSearch = function(obj, item, callback) {
+            for (var k in obj) {
+                if (k == item) this.callback(k, obj[k]);
+                if (typeof(obj[k]) === 'object') {
+                    this.startSearch(obj[k], item);
+                }
+            }
+        }
+
+        FindItem.prototype.callback = function (name, value) {
+            return document.write(name + ":" + value);
+        }
+
+        new FindItem();	
+	</script>
+</body>
+</html>
