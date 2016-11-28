@@ -1,0 +1,59 @@
+<!-- 
+    1.) Реализуйте hover изображений с помощью Javascript.
+    2.) Добавьте второй изображение при помощи JavaScript. При клике на изображение откройте его в полном размере.
+    3.) Выведите в рамзетку альтернативный текст для картинок.
+ -->
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>Images</title>
+ 	<style>
+ 		img[name = "fruit"] {
+ 			width: 300px;
+ 		}
+ 	</style>
+  </head>
+ <body>
+ 	<img src="img/3.jpg" name="fruit" alt="banan">
+ 	<script>
+ 		function Images () {
+ 			this.fruit = document["fruit"];
+ 			this.fruit.addEventListener('mouseenter', this.hoverHandler.bind(this, "img/2.jpg", "peach" ));
+ 			this.fruit.addEventListener('mouseleave', this.hoverHandler.bind(this, "img/3.jpg", "banan" ));
+ 			this.newImg();
+ 			this.p = document.createElement('p');
+ 		}
+
+ 		Images.prototype.hoverHandler = function (src, alt) {
+ 			this.fruit.src = src;
+ 			this.fruit.alt = alt;
+ 			this.alt();
+ 		}
+
+ 		Images.prototype.newImg = function () {
+ 			this.newImg = new Image(200);
+
+ 			this.newImg.src = "img/5.jpg";
+ 			document.body.appendChild(this.newImg);
+ 			this.newImg.addEventListener('click', this.fullSize.bind(this));
+ 		}
+
+ 		Images.prototype.fullSize = function () {
+ 			window.open(this.newImg.src, "Big", "width=300, height=300,location=yes,resizable=yes,scrollbars=yes,status=yes");
+ 		} 
+
+ 		Images.prototype.alt = function () {	
+ 			this.p.innerHTML = this.fruit.alt;
+ 			document.body.appendChild(this.p);
+ 		}
+
+
+
+
+
+ 		new Images();
+ 	</script>
+ </body>
+ </html>
