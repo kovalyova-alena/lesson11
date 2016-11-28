@@ -11,27 +11,30 @@
 	</style>
 </head>
 <body>
-    <img src="" alt="">
     <input type="file" multiple>	
     <script>
         function DecodeImg() {
             this.input = document.querySelector('input');
-            this.input.addEventListener('change', this.openImgHandler.bind(this));
+            this.input.addEventListener('change', this.openImgHandler.bind(this), false);
         }
 
         DecodeImg.prototype.openImgHandler = function(event) {
-            this.img = document.querySelector('img');
-            var reader = new FileReader(),
-                files = event.target.files[0];
-               
-            reader.addEventListener("load", this.load.bind(this));   
-            files ?  reader.readAsDataURL(files) : this.img.src = "";           
+            var files = event.target.files;
+            
+            for (var i = 0; i < files.length; i++) { 
+                var file = files[i];
+
+                var reader = new FileReader();
+                reader.addEventListener("load", this.load.bind(this));   
+                reader.readAsDataURL(file);
+            }           
         }
 
         DecodeImg.prototype.load = function (e) {
-            var result = e.target.result;
-
-            this.img.src = result;  
+            var result = e.target.result,
+            div = document.createElement("div");
+            div.innerHTML = "<img class='thumbnail' src='" + result + "'/>";
+            this.input.insertAdjacentElement("beforeBegin", div); 
         }
 
         new DecodeImg();
