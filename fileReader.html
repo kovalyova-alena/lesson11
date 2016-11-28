@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>File Reader</title>
+	<style>
+		img {
+			width: 500px;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+    <img src="" alt="">
+    <input type="file" multiple>	
+    <script>
+        function DecodeImg() {
+            this.input = document.querySelector('input');
+            this.input.addEventListener('change', this.openImgHandler.bind(this));
+        }
+
+        DecodeImg.prototype.openImgHandler = function(event) {
+            this.img = document.querySelector('img');
+            var reader = new FileReader(),
+                files = event.target.files[0];
+               
+            reader.addEventListener("load", this.load.bind(this));   
+            files ?  reader.readAsDataURL(files) : this.img.src = "";           
+        }
+
+        DecodeImg.prototype.load = function (e) {
+            var result = e.target.result;
+
+            this.img.src = result;  
+        }
+
+        new DecodeImg();
+</script>
+</body>
+</html>
